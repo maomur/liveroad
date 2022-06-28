@@ -60,35 +60,24 @@ class App {
             this.addButton.className = 'd-none';
         }
  
-
-/* ------------------------------------- INICIO FUNCIÓN DELETE --------------------------------------------  */
-
-        //NO HE PODIDO CON ESTA FUNCIÓN; PESE A QUE EN EL ARRAY SE VE QUE SÍ ELIMINA EFECTIVAMENTE LOS ELEMENTOS, CUANDO LLAMO A LA FUNCIÓN "createItem()", o a la función "readItem()"; ninguna de éstas me permite ver en pantalla los elementos nuevos.
-
         deleteItem(e){
             this.array = this.array.filter( (item)=>{
                 return item.id !== e.target.parentElement.dataset.id;
             })
-            console.log(this.array);
-
-            //this.createItem();
-            //this.readItems();
+            this.readItems();
             this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
-
         }
 
-        /* ------------------------------------- FIN FUNCIÓN DELETE --------------------------------------------  */
-
-
+        
         createItem(){
 
             if(!this.loadIInput.value || !this.originInput){
                 this.alertSuccessFuncion('ERROR: No has llenado los campos obligatorios: LOAD, ORIGIN', 'alert-danger', 'text-ligth');
-
                 return;
             }
 
             const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
+
             this.array.push(addItem);
             
             this.readItems()
@@ -100,11 +89,11 @@ class App {
         
 
         readItems(){
-            const article = document.createElement('article');
-            
-            article.classList.add('d-flex', 'justify-content-left', 'align-items-center', 'px-3', 'border-top');
-
+            this.boxContent.innerHTML = "";
             this.array.forEach( (item)=>{
+                const article = document.createElement('article');
+                
+                article.classList.add('d-flex', 'justify-content-left', 'align-items-center', 'px-3', 'border-top');
                 
                 article.dataset.id = item.id;
                 
@@ -133,21 +122,23 @@ class App {
                 
                 //Insertamos Template
                 article.innerHTML = `
-                <div class="title-items">${this.puInput.value}</div>
-                <div class="title-items">${this.delInput.value}</div>
-                <div class="title-items">${this.loadIInput.value}</div>
-                <div class="title-items me-auto">${this.originInput.value}</div>
+                <div class="title-items">${item.pu}</div>
+                <div class="title-items">${item.del}</div>
+                <div class="title-items">${item.load}</div>
+                <div class="title-items me-auto">${item.origin}</div>
                 `   
-                //Insertamos Contenidos
-                article.append(iconEye, iconEdit, iconDelet);
-                boxContent.append(article);
-                
                 //Mostramos la Caja inferior de Resultados
                 this.boxContent.className = 'd-show';
+
+                //Insertamos Contenidos
+                article.append(iconEye, iconEdit, iconDelet);
+                boxContent.appendChild(article);
+                
             })
         }
 
         //Mostramos los registros actuaales y ocultamos el formulario
+
         viewAll(){
         
             this.addButton.className = 'form-control w-25 bg-warning d-block';
