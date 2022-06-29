@@ -26,12 +26,11 @@
         </header>
         <section class="bg-primary p-3 grid-section text-center">
             <div class="text-light"><h1 class="fs-3">Control Manager</h1></div>
-
-     <div id="form-search-header" class="grid-section">
-        <input id="searchInput" type="text" class="form-control border-0" placeholder="Load Number...">
-        <button id="searchButton" class="border-0 form-control">Search</button>
-    </div>
-</section>
+            <div></div>
+            <div id="form-search-header" class="grid-section">
+                <input id="searchInput" type="text" class="form-control border-0" placeholder="Load Number...">
+            </div>
+        </section>
 
     <div id="formNewInfo" class="d-flex justify-content-end p-2 otro">
         <button id="addButton" class="form-control w-25 bg-warning d-none">Add</button>
@@ -66,21 +65,22 @@
     </div>
     </div>
 
-    <h1 class="text-center fs-4 py-4">Items</h1>
-            <section class="d-flex justify-content-left align-items-center px-3">
-                <div class="title-col">P/U</div>
-                <div class="title-col">LOAD</div>
-                <div class="title-col">ORIGIN</div>
-                <div class="title-col me-auto">DESTINY</div>
-                <div><i class="bi bi-eye fs-3 p-1 text-dark"></i>
-                    <i class="bi bi-pencil-square p-1 fs-4 text-dark"></i>
-                    <i class="bi bi-trash3-fill p-1 fs-4 text-dark"></i></div>
-            </section>
+    <div class="d-none" id="boxHeaderItems">
+        <h1 class="text-center fs-4 py-4">Items</h1>
+                <section class="d-flex justify-content-left align-items-center px-3">
+                    <div class="title-col">P/U</div>
+                    <div class="title-col">LOAD</div>
+                    <div class="title-col">ORIGIN</div>
+                    <div class="title-col me-auto">DESTINY</div>
+                    <div><i class="bi bi-eye fs-3 p-1 text-dark"></i>
+                        <i class="bi bi-pencil-square p-1 fs-4 text-dark"></i>
+                        <i class="bi bi-trash3-fill p-1 fs-4 text-dark"></i></div>
+                </section>
+    </div>
     <div id="boxContent" class="py-5 d-none">
+
+        <!-- CONTENT APPENDED -->
         
-            
-        
-        </div>
     </div>
 
     

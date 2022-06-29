@@ -35,6 +35,7 @@ class App {
 
     //Boxes
     boxHide = document.querySelector('.boxHide');
+    boxHeaderItems = document.querySelector('#boxHeaderItems');
     boxContent = document.querySelector('#boxContent');
 
     constructor(){
@@ -45,29 +46,22 @@ class App {
 
         this.viewAllButton.addEventListener('submit', ()=> this.viewAll());
 
-        this.searchButton.addEventListener('click', ()=> this.searchFuncion());
+        this.searchInput.addEventListener('keyup', ()=> this.filter());
 
         this.viewAllButton.addEventListener('click', ()=>this.viewAll());
 
     }
 
-        //-----------> FUNCIONES <-------------//
+//------------------> FUNCIONES <-------------------//
 
         //Habilita el formulario para agregar registros
+
         addForm(){
             this.boxHide.className = 'd-flex';
             this.viewAllButton.className = "form-control w-25 bg-primary text-light";
             this.addButton.className = 'd-none';
         }
  
-        deleteItem(e){
-            this.array = this.array.filter( (item)=>{
-                return item.id !== e.target.parentElement.dataset.id;
-            })
-            this.readItems();
-            this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
-        }
-
         
         createItem(){
 
@@ -88,9 +82,9 @@ class App {
         }
         
 
-        readItems(){
+        readItems(myArray = this.array){
             this.boxContent.innerHTML = "";
-            this.array.forEach( (item)=>{
+            myArray.forEach( (item)=>{
                 const article = document.createElement('article');
                 
                 article.classList.add('d-flex', 'justify-content-left', 'align-items-center', 'px-3', 'border-top');
@@ -127,7 +121,8 @@ class App {
                 <div class="title-items">${item.load}</div>
                 <div class="title-items me-auto">${item.origin}</div>
                 `   
-                //Mostramos la Caja inferior de Resultados
+                //Mostramos la Cajas de Resultados
+                this.boxHeaderItems.className = "d-show";
                 this.boxContent.className = 'd-show';
 
                 //Insertamos Contenidos
@@ -136,6 +131,34 @@ class App {
                 
             })
         }
+
+
+        deleteItem(e){
+            this.array = this.array.filter( (item)=>{
+                return item.id !== e.target.parentElement.dataset.id;
+            })
+            this.readItems();
+            this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
+        }
+
+
+        filter(){
+            if(this.searchInput.value === ''){
+                this.readItems();
+            } else{
+
+                this.newFilteredArray = this.array.filter( (item)=>{
+                    const searchLower = this.searchInput.value.toLowerCase();
+                    const loadLower = item.load.toLowerCase();
+                    // console.log('entró');
+                    // console.log(this.newFilteredArray);
+                    return searchLower == loadLower;
+                })
+
+                this.readItems(this.newFilteredArray);
+            }         
+        }
+       
 
         //Mostramos los registros actuaales y ocultamos el formulario
 
