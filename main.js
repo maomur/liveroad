@@ -61,7 +61,7 @@ class App {
 
         addForm(){
             this.boxHide.className = 'd-flex';
-            this.viewAllButton.className = "form-control w-25 bg-primary text-light";
+            this.viewAllButton.className = "form-control w-25 main-color text-light";
             this.addButton.className = 'd-none';
         }
  

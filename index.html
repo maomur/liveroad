@@ -21,10 +21,10 @@
 </head>
 <body>
     <div class="container p-1 bg-light shadow ">
-        <header class="bg-secondary">
-            <h1 class="text-light p-3">LIVEROAD</h1>
+        <header class="bg-dark">
+            <a href="./"><img class="logo" src="./assets/img/liveroad-logo.png" alt="logo Liveroad"></a>
         </header>
-        <section class="bg-primary p-3 grid-section text-center">
+        <section class="main-color p-3 grid-section text-center">
             <div class="text-light"><h1 class="fs-3">Control Manager</h1></div>
             <div></div>
             <div id="form-search-header" class="grid-section">
@@ -34,7 +34,7 @@
 
     <div id="formNewInfo" class="d-flex justify-content-end p-2 otro">
         <button id="addButton" class="form-control w-25 bg-warning d-none">Add</button>
-        <button id="viewAllButton" class="form-control w-25 bg-primary text-light">View All</button>   
+        <button id="viewAllButton" class="form-control w-25 bg-dark text-light">View All</button>   
     </div>
 
     <!-- Block Results  -->
@@ -59,7 +59,7 @@
                 <option value="unpaid">Unpaid</option>
             </select>
         </div>
-        <div><button id="saveItem" class="form-control bg-success text-light">Save</button></div>
+        <div><button id="saveItem" class="form-control bg-dark text-light">Save</button></div>
         
 
     </div>
@@ -95,47 +95,21 @@
             <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-primary">
+                    <div class="modal-header main-color">
                     <h5 class="modal-title text-light" id="exampleModalLabel">ITEM</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
+                        <!-- Content Modal -->
                     </div>
-    
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn main-color text-light" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
                 </div>
             </div>
 
-
-    <!-- Modal Confirm Delete -->
-
-    <!-- Modal Info Data-->
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-            <h5 class="modal-title text-light" id="exampleModalLabel">ATENCIÓN</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-delete">
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Yes, delete</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-
-    <footer class="container bg-primary text-light text-end p-2 mt-2">
+    <footer class="container main-color text-light text-end p-2 mt-2">
         <small>Developed by: Maomur</small>
     </footer>
     

@@ -2,6 +2,14 @@ body{
     background-color: rgb(231, 231, 231);
 }
 
+.logo{
+    width: 30%;
+}
+
+.main-color{
+    background-color: #971f1f;
+}
+
 .imgW{
     padding: 1rem;
     width: 200px;
