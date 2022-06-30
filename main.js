@@ -37,6 +37,9 @@ class App {
     boxHide = document.querySelector('.boxHide');
     boxHeaderItems = document.querySelector('#boxHeaderItems');
     boxContent = document.querySelector('#boxContent');
+    modalBody = document.querySelector('.modal-body');
+
+
 
     constructor(){
 
@@ -97,8 +100,8 @@ class App {
                 const iconDelet = document.createElement('i');
                 
                 //Listeners de Íconos
-                iconEye.addEventListener('click', ( ()=>{
-                    console.log('hola EyeIcon')
+                iconEye.addEventListener('click', ( (e)=>{
+                    this.showItem(e);
                 }));
                 
                 iconEdit.addEventListener('click', ( ()=>{
@@ -109,17 +112,20 @@ class App {
                     this.deleteItem(e);
                 }))
 
-                //Asignación de Clases                
+                //Asignación de Clases y Atributos            
                 iconEye.className = "bi bi-eye fs-3 p-1 text-primary";
                 iconEdit.className = "bi bi-pencil-square p-1 fs-4 text-warning";
                 iconDelet.className = "bi bi-trash3-fill p-1 fs-4 text-danger";
+                iconEye.setAttribute('data-bs-toggle', 'modal');
+                iconEye.setAttribute('data-bs-target', '#itemModal');
+                iconEye.className = 'bi bi-eye fs-3 p-1 text-primary';
                 
                 //Insertamos Template
                 article.innerHTML = `
                 <div class="title-items">${item.pu}</div>
-                <div class="title-items">${item.del}</div>
                 <div class="title-items">${item.load}</div>
-                <div class="title-items me-auto">${item.origin}</div>
+                <div class="title-items">${item.origin}</div>
+                <div class="title-items me-auto">${item.destiny}</div>
                 `   
                 //Mostramos la Cajas de Resultados
                 this.boxHeaderItems.className = "d-show";
@@ -134,13 +140,16 @@ class App {
 
 
         deleteItem(e){
-            this.array = this.array.filter( (item)=>{
-                return item.id !== e.target.parentElement.dataset.id;
-            })
-            this.readItems();
-            this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
-        }
 
+            if (window.confirm("Está seguro que desea eliminar el registro?")) {
+                this.array = this.array.filter( (item)=>{
+                    return item.id !== e.target.parentElement.dataset.id;
+                })
+                this.readItems();
+                this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
+              }
+        }
+        
 
         filter(){
             if(this.searchInput.value === ''){
@@ -157,6 +166,87 @@ class App {
 
                 this.readItems(this.newFilteredArray);
             }         
+        }
+
+
+        showItem(e){
+            this.modalBody.innerHTML = '';
+            this.array.forEach( (item)=>{
+                if(item.id !== e.target.parentElement.dataset.id){
+                    return;
+                }
+
+            const modalInfo = document.createElement('div');
+
+            modalInfo.innerHTML = 
+            `
+            <h4 class="d-block px-4">Main Information</h4>
+            <hr>
+            <div class="d-flex flex-wrap gap-5 p-3">
+                <div class="col-2">
+                    <h3 class="fs-6">Pick Up</h3>
+                    <p>${item.pu}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Delivery</h3>
+                    <p>${item.del}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Load</h3>
+                    <p>${item.load}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Origin</h3>
+                    <p>${item.origin}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Destination</h3>
+                    <p>${item.destiny}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Commodity</h3>
+                    <p>${item.commodity}</p>
+                </div>
+            </div>
+            <h4 class="d-block px-4">Broker Information</h4>
+            <hr>
+
+            <div class="d-flex flex-wrap gap-5 p-3">
+                <div class="col-2">
+                    <h3 class="fs-6">Company</h3>
+                    <p>${item.brokerCompany}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Name</h3>
+                    <p>${item.brokerName}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Phone</h3>
+                    <p>${item.brokerPhone}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Extension</h3>
+                    <p>${item.phoneExtension}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Rate</h3>
+                    <p>${item.rate}</p>
+                </div>
+                <div class="col-2">
+                    <h3 class="fs-6">Truck No</h3>
+                    <p>${item.truckNumber}</p>
+                </div>
+            </div>
+            <h4 class="d-block px-4">Status</h4>
+            <hr>
+            <div class="col-2">
+                <h3 class="fs-6">Paid/Unpaid</h3>
+                <p>${item.paid}</p>
+            </div>
+
+            `
+            this.modalBody.append(modalInfo);
+            })
         }
        
 
