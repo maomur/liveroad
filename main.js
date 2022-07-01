@@ -38,8 +38,8 @@ class App {
     boxHeaderItems = document.querySelector('#boxHeaderItems');
     boxContent = document.querySelector('#boxContent');
     modalBody = document.querySelector('.modal-body');
-
-
+    modalDelete = document.querySelector('.modal-delete');
+    buttonConfirm = document.querySelector('#buttonConfirm');
 
     constructor(){
 
@@ -61,7 +61,7 @@ class App {
 
         addForm(){
             this.boxHide.className = 'd-flex';
-            this.viewAllButton.className = "form-control w-25 main-color text-light";
+            this.viewAllButton.className = "form-control w-25 bg-primary text-light";
             this.addButton.className = 'd-none';
         }
  
@@ -116,6 +116,8 @@ class App {
                 iconEye.className = "bi bi-eye fs-3 p-1 text-primary";
                 iconEdit.className = "bi bi-pencil-square p-1 fs-4 text-warning";
                 iconDelet.className = "bi bi-trash3-fill p-1 fs-4 text-danger";
+                iconDelet.setAttribute('data-bs-toggle', 'modal');
+                iconDelet.setAttribute('data-bs-target', '#deleteModal');
                 iconEye.setAttribute('data-bs-toggle', 'modal');
                 iconEye.setAttribute('data-bs-target', '#itemModal');
                 iconEye.className = 'bi bi-eye fs-3 p-1 text-primary';
@@ -140,14 +142,16 @@ class App {
 
 
         deleteItem(e){
-
-            if (window.confirm("Está seguro que desea eliminar el registro?")) {
-                this.array = this.array.filter( (item)=>{
+            
+            this.buttonConfirm.addEventListener('click', ()=>{
+                    this.array = this.array.filter( (item)=>{
                     return item.id !== e.target.parentElement.dataset.id;
-                })
-                this.readItems();
-                this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
-              }
+                    })
+                    this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
+                    
+                    this.readItems();
+                })         
+              
         }
         
 
@@ -172,9 +176,7 @@ class App {
         showItem(e){
             this.modalBody.innerHTML = '';
             this.array.forEach( (item)=>{
-                if(item.id !== e.target.parentElement.dataset.id){
-                    return;
-                }
+                if(item.id !== e.target.parentElement.dataset.id){return}
 
             const modalInfo = document.createElement('div');
 
