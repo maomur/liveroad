@@ -3,6 +3,7 @@ import {Items} from './classes/Item.js';
 class App {
 
     array = [];
+    iCurrent = 0;
 
     // CAZADOR DE ELEMENTOS
 
@@ -15,9 +16,6 @@ class App {
     viewAllButton = document.querySelector('#viewAllButton');
 
     //Inputs Nuevo Elemento
-    formNewInfo = document.querySelector('#formNewInfo');
-    saveButton = document.querySelector('#saveItem');
-    alertSuccess = document.querySelector('#alertSuccess');
     puInput = document.querySelector('#pu');
     delInput = document.querySelector('#del');
     loadIInput = document.querySelector('#loadI');
@@ -31,6 +29,11 @@ class App {
     rateInput = document.querySelector('#rate');
     truckNumberInput = document.querySelector('#truckNumber');
     paidUnpaidInput = document.querySelector('#paidUnpaid');
+
+    formNewInfo = document.querySelector('#formNewInfo');
+    saveButton = document.querySelector('#saveItem');
+    updateButton = document.querySelector('#updateButton');
+    alertSuccess = document.querySelector('#alertSuccess');
 
 
     //Boxes
@@ -53,6 +56,8 @@ class App {
 
         this.viewAllButton.addEventListener('click', ()=>this.viewAll());
 
+        this.updateButton.addEventListener('click', ()=> this.updateItem());
+
     }
 
 //------------------> FUNCIONES <-------------------//
@@ -61,7 +66,7 @@ class App {
 
         addForm(){
             this.boxHide.className = 'd-flex';
-            this.viewAllButton.className = "form-control w-25 bg-primary text-light";
+            this.viewAllButton.className = "form-control w-25 bg-dark text-light";
             this.addButton.className = 'd-none';
         }
  
@@ -100,17 +105,11 @@ class App {
                 const iconDelet = document.createElement('i');
                 
                 //Listeners de Íconos
-                iconEye.addEventListener('click', ( (e)=>{
-                    this.showItem(e);
-                }));
+                iconEye.addEventListener('click', ( e => this.showItem(e)));
                 
-                iconEdit.addEventListener('click', ( ()=>{
-                    console.log('Hola iconEdit');
-                }));
+                iconEdit.addEventListener('click', ( () => this.editItem(item.id)));
                 
-                iconDelet.addEventListener('click', ( (e)=>{
-                    this.deleteItem(e);
-                }))
+                iconDelet.addEventListener('click', ( e => this.deleteItem(e)));
 
                 //Asignación de Clases y Atributos            
                 iconEye.className = "bi bi-eye fs-3 p-1 text-primary";
@@ -140,18 +139,64 @@ class App {
             })
         }
 
+        editItem(id){
+            this.updateButton.className = "form-control bg-success text-light d-show"
+            this.saveButton.className = 'd-none';
+
+            const itemUpdate = this.array.find( (item)=>{
+                //const iCurrent = e.target.parentElement.dataset.id;
+                return item.id === id})
+
+                this.puInput.value = itemUpdate.pu;
+                this.delInput.value = itemUpdate.del;
+                this.loadIInput.value = itemUpdate.load;
+                this.originInput.value = itemUpdate.origin;
+                this.destinyInput.value = itemUpdate.destiny;
+                this.commodityInput.value = itemUpdate.commodity;
+                this.brokerCompanyInput.value = itemUpdate.brokerCompany;
+                this.brokerNameInput.value = itemUpdate.brokerName;
+                this.brokerPhoneInput.value = itemUpdate.brokerPhone;
+                this.extensionInput.value = itemUpdate.phoneExtension;
+                this.rateInput.value = itemUpdate.rate;
+                this.truckNumberInput.value = itemUpdate.truckNumber;
+                this.paidUnpaidInput.value = itemUpdate.paid;
+                this.iCurrent = itemUpdate.id;
+                
+        }
+
+        updateItem(){
+        
+        this.updateButton.className = "form-control bg-success text-light d-none";
+        this.saveButton.className = 'form-control bg-dark text-light';
+
+            this.array = this.array.map( (item)=>{
+                if(item.id === this.iCurrent){
+                    return {...item, pu: this.puInput.value, del: this.delInput.value, load: this.loadIInput.value, origin: this.originInput.value, destiny: this.destinyInput.value, commodity: this.commodityInput.value, brokerCompany: this.brokerCompanyInput.value, brokerName: this.brokerNameInput.value, brokerName: this.brokerNameInput.value, brokerPhone: this.brokerPhoneInput.value, phoneExtension: this.extensionInput.value, rate: this.rateInput.value, truckNumber: this.truckNumberInput.value, paid: this.paidUnpaidInput.value}
+                } else{
+                    return item;
+                }
+            })
+            
+            this.alertSuccessFuncion('Registro Actualizado con Éxito', 'alert-primary');
+
+            this.readItems()
+            
+            this.clearInputs();
+
+            this.iCurrent = 0;
+            this.readItems();
+            console.log(this.array)
+        }
 
         deleteItem(e){
             
             this.buttonConfirm.addEventListener('click', ()=>{
-                    this.array = this.array.filter( (item)=>{
-                    return item.id !== e.target.parentElement.dataset.id;
-                    })
-                    this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');
-                    
-                    this.readItems();
+                this.array = this.array.filter( (item)=>{
+                return item.id !== e.target.parentElement.dataset.id;
+                })
+                this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');                    
+                this.readItems();
                 })         
-              
         }
         
 
@@ -163,11 +208,8 @@ class App {
                 this.newFilteredArray = this.array.filter( (item)=>{
                     const searchLower = this.searchInput.value.toLowerCase();
                     const loadLower = item.load.toLowerCase();
-                    // console.log('entró');
-                    // console.log(this.newFilteredArray);
                     return searchLower == loadLower;
                 })
-
                 this.readItems(this.newFilteredArray);
             }         
         }
@@ -296,7 +338,6 @@ class App {
             this.paidUnpaidInput.value = 'unselect';
             this.puInput.focus()
         }
-
 }
 
 const app = new App();
