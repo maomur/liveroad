@@ -26,13 +26,18 @@ class App {
     brokerNameInput = document.querySelector('#brokerName');
     brokerPhoneInput = document.querySelector('#brokerPhone');
     extensionInput = document.querySelector('#extension');
+
     rateInput = document.querySelector('#rate');
     truckNumberInput = document.querySelector('#truckNumber');
     paidUnpaidInput = document.querySelector('#paidUnpaid');
 
     formNewInfo = document.querySelector('#formNewInfo');
     saveButton = document.querySelector('#saveItem');
+    saveDiv = document.querySelector('#saveDiv');
+    updateDiv = document.querySelector('#updateDiv');
+    cancelDiv = document.querySelector('#cancelDiv');
     updateButton = document.querySelector('#updateButton');
+    cancelButton = document.querySelector('#cancelUpdate')
     alertSuccess = document.querySelector('#alertSuccess');
 
 
@@ -70,15 +75,26 @@ class App {
             this.addButton.className = 'd-none';
         }
  
-        
+        currencyFormat(rate){
+            const input = parseInt(rate);
+    
+            this.rateInput = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+
+            }).format(input);
+        }
+
         createItem(){
 
             if(!this.loadIInput.value || !this.originInput){
-                this.alertSuccessFuncion('ERROR: No has llenado los campos obligatorios: LOAD, ORIGIN', 'alert-danger', 'text-ligth');
+                this.alertSuccessFuncion('ERROR: you have not filled in the field O-City', 'alert-danger', 'text-ligth');
                 return;
             }
 
-            const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
+            this.currencyFormat(rate.value);
+
+            const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput, this.truckNumberInput.value, this.paidUnpaidInput.value);
 
             this.array.push(addItem);
             
@@ -86,7 +102,7 @@ class App {
             
             this.clearInputs();
 
-            this.alertSuccessFuncion('Registro creado con éxito', 'alert-success');
+            this.alertSuccessFuncion('Record created successfully', 'alert-success');
         }
         
 
@@ -140,8 +156,25 @@ class App {
         }
 
         editItem(id){
-            this.updateButton.className = "form-control bg-success text-light d-show"
-            this.saveButton.className = 'd-none';
+            this.updateDiv.className = 'd-show col-4 button';
+            this.updateButton.className = "form-control bg-success text-light"
+
+            this.saveDiv.className = 'd-none';
+            this.cancelDiv.className = 'd-show col-4 button';
+            this.cancelButton.className = 'form-control bg-dark text-light form-control';
+
+            //Escuchamos el cancelButton
+            this.cancelButton.addEventListener('click', ()=>{
+                this.clearInputs();
+                this.updateDiv.className = 'd-none';
+                this.cancelDiv.className = 'd-none';
+                this.saveDiv.className = 'd-show col-4 button';
+                
+                
+            });
+            
+
+            this.boxHide.className = 'd-show';
 
             const itemUpdate = this.array.find( (item)=>{
                 //const iCurrent = e.target.parentElement.dataset.id;
@@ -177,7 +210,7 @@ class App {
                 }
             })
             
-            this.alertSuccessFuncion('Registro Actualizado con Éxito', 'alert-primary');
+            this.alertSuccessFuncion('The record has been updated', 'alert-primary');
 
             this.readItems()
             
@@ -185,7 +218,8 @@ class App {
 
             this.iCurrent = 0;
             this.readItems();
-            console.log(this.array)
+            this.boxHide.className = 'd-none';
+
         }
 
         deleteItem(e){
@@ -194,7 +228,7 @@ class App {
                 this.array = this.array.filter( (item)=>{
                 return item.id !== e.target.parentElement.dataset.id;
                 })
-                this.alertSuccessFuncion('Registro eliminado correctamente', 'alert-danger', 'text-ligth');                    
+                this.alertSuccessFuncion('The record has been deleted', 'alert-danger', 'text-ligth');                    
                 this.readItems();
                 })         
         }
@@ -226,66 +260,68 @@ class App {
             `
             <h4 class="d-block px-4">Main Information</h4>
             <hr>
-            <div class="d-flex flex-wrap gap-5 p-3">
-                <div class="col-2">
-                    <h3 class="fs-6">Pick Up</h3>
-                    <p>${item.pu}</p>
+            <div class="d-flex flex-wrap gap-4 p-5">
+                <div class="col-3">
+                    <h3 class="fs-6">PICKUP</h3>
+                    <p class = "fs-5">${item.pu}</p>
                 </div>
-                <div class="col-2">
-                    <h3 class="fs-6">Delivery</h3>
-                    <p>${item.del}</p>
+                <div class="col-3">
+                    <h3 class="fs-6">DELIVERY</h3>
+                    <p class = "fs-5">${item.del}</p>
                 </div>
-                <div class="col-2">
-                    <h3 class="fs-6">Load</h3>
-                    <p>${item.load}</p>
+                <div class="col-3">
+                    <h3 class="fs-6">LOAD</h3>
+                    <p class = "fs-5">${item.load}</p>
                 </div>
-                <div class="col-2">
-                    <h3 class="fs-6">Origin</h3>
-                    <p>${item.origin}</p>
+                <div class="col-3">
+                    <h3 class="fs-6">O-City</h3>
+                    <p class = "fs-5">${item.origin}</p>
                 </div>
-                <div class="col-2">
-                    <h3 class="fs-6">Destination</h3>
-                    <p>${item.destiny}</p>
+                <div class="col-3">
+                    <h3 class="fs-6">D-City</h3>
+                    <p class = "fs-5">${item.destiny}</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <h3 class="fs-6">Commodity</h3>
-                    <p>${item.commodity}</p>
+                    <p class = "fs-5">${item.commodity}</p>
                 </div>
             </div>
             <h4 class="d-block px-4">Broker Information</h4>
             <hr>
 
-            <div class="d-flex flex-wrap gap-5 p-3">
-                <div class="col-2">
+            <div class="d-flex flex-wrap gap-4 p-5">
+                <div class="col-3">
                     <h3 class="fs-6">Company</h3>
-                    <p>${item.brokerCompany}</p>
+                    <p class = "fs-5">${item.brokerCompany}</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <h3 class="fs-6">Name</h3>
-                    <p>${item.brokerName}</p>
+                    <p class = "fs-5">${item.brokerName}</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <h3 class="fs-6">Phone</h3>
-                    <p>${item.brokerPhone}</p>
+                    <p class = "fs-5">${item.brokerPhone}</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <h3 class="fs-6">Extension</h3>
-                    <p>${item.phoneExtension}</p>
+                    <p class = "fs-5">${item.phoneExtension}</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <h3 class="fs-6">Rate</h3>
-                    <p>${item.rate}</p>
+                    <p class = "fs-5">${item.rate}</p>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <h3 class="fs-6">Truck No</h3>
-                    <p>${item.truckNumber}</p>
+                    <p class = "fs-5">${item.truckNumber}</p>
                 </div>
             </div>
-            <h4 class="d-block px-4">Status</h4>
-            <hr>
-            <div class="col-2">
-                <h3 class="fs-6">Paid/Unpaid</h3>
-                <p>${item.paid}</p>
+            <div class = "gap-4 p-5">
+                <h4 class="d-block px-4">Status</h4>
+                <hr>
+                <div class="col-3">
+                    <h3 class="fs-6">Paid/Unpaid</h3>
+                    <p class = "fs-5">${item.paid}</p>
+                </div>
             </div>
 
             `
@@ -298,7 +334,7 @@ class App {
 
         viewAll(){
         
-            this.addButton.className = 'form-control w-25 bg-warning d-block';
+            this.addButton.className = 'form-control w-25 main-color text-light d-block';
             this.boxContent.className = 'd-show';
             this.viewAllButton.className = 'd-none';
     
@@ -307,6 +343,7 @@ class App {
             } 
         }
 
+        
         //Toasts
         alertSuccessFuncion(mensaje = 'Ha ocurrido un error', color = 'alert-success'){
             const alertS = document.createElement('div');
@@ -333,7 +370,7 @@ class App {
             this.brokerNameInput.value = '';
             this.brokerPhoneInput.value = '';
             this.extensionInput.value = '';
-            this.rateInput.value = '';
+            //this.rateInput.value = '';
             this.truckNumberInput.value = '';
             this.paidUnpaidInput.value = 'unselect';
             this.puInput.focus()

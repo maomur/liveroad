@@ -11,7 +11,7 @@ body{
     background-color: #971f1f;
 }
 
-.imgW{
+.img{
     padding: 1rem;
     width: 200px;
     min-width: 100;
@@ -60,4 +60,12 @@ body{
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
     align-items: end;
+}
+
+.button{
+    width: 100%;
+}
+
+.none{
+    display: none;
 }

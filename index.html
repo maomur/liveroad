@@ -33,18 +33,18 @@
         </section>
 
     <div id="formNewInfo" class="d-flex justify-content-end p-2 otro">
-        <button id="addButton" class="form-control w-25 bg-warning d-none">Add</button>
+        <button id="addButton" class="form-control w-25 main-color d-none">Add</button>
         <button id="viewAllButton" class="form-control w-25 bg-dark text-light">View All</button>
     </div>
 
     <!-- Block Results  -->
     <div class="boxHide">
     <div id="form-control-add" class="form-control grid-form p-5">
-        <div><smal>PICK UP</smal><input id="pu" class="form-control" type="date" name="pu" aria-describedby="helpPu"></div>
+        <div><smal>PICKUP</smal><input id="pu" class="form-control" type="date" name="pu" aria-describedby="helpPu"></div>
         <div><small>DELIVERY</small><input id="del" class="form-control" type="date" name="del" aria-describedby="helpDel"></div>
         <div><input id="loadI" class="form-control" type="text" placeholder="Load Number" required></div>
-        <div><input id="origin" class="form-control" type="text" placeholder="Origin City"></div>
-        <div><input id="destiny" class="form-control" type="text" placeholder="Destination City"></div>
+        <div><input id="origin" class="form-control" type="text" placeholder="O-City"></div>
+        <div><input id="destiny" class="form-control" type="text" placeholder="D-City"></div>
         <div><input id="commodity" class="form-control" type="text" placeholder="Commodity"></div>
         <div><input id="brokerCompany" class="form-control" type="text" placeholder="Broker Company"></div>
         <div><input id="brokerName" class="form-control" type="text" placeholder="Broker Name"></div>
@@ -59,8 +59,15 @@
                 <option value="unpaid">Unpaid</option>
             </select>
         </div>
-        <div><button id="saveItem" class="form-control bg-dark text-light">Save</button></div>
-        <div><button id="updateButton" class="form-control bg-success text-light d-none">Update</button></div>
+        <div>
+            <div class="d-flex">
+                <div id="saveDiv" class="col-4 button"><button id="saveItem" class="form-control bg-dark text-light">Save</button></div>
+                <div id="updateDiv" class="col-4 button"><button id="updateButton" class="form-control bg-success text-light d-none">Update</button></div>
+                <div id="cancelDiv" class="col-4 button"><button id="cancelUpdate" class="form-control text-light d-none bg-warning">Cancel</button></div>
+            </div>
+        </div> 
+        
+
 
 
     </div>
@@ -69,13 +76,11 @@
     <div class="d-none" id="boxHeaderItems">
         <h1 class="text-center fs-4 py-4">Items</h1>
                 <section class="d-flex justify-content-left align-items-center px-2">
-                    <div class="title-col">P/U</div>
+                    <div class="title-col">PICKUP</div>
                     <div class="title-col">LOAD</div>
-                    <div class="title-col">ORIGIN</div>
-                    <div class="title-col me-auto">DESTINY</div>
-                    <div><i class="bi bi-eye fs-3 p-1 text-dark"></i>
-                        <i class="bi bi-pencil-square p-1 fs-4 text-dark"></i>
-                        <i class="bi bi-trash3-fill p-1 fs-4 text-dark"></i></div>
+                    <div class="title-col">O-City</div>
+                    <div class="title-col me-auto">D-City</div>
+                    
                 </section>
     </div>
 
@@ -94,7 +99,7 @@
 
             <!--------- Modal Info Data Inicio ---------------->
             <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header main-color">
                     <h5 class="modal-title text-light" id="exampleModalLabel">ITEM DETAILS</h5>
