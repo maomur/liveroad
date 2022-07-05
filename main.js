@@ -75,16 +75,6 @@ class App {
             this.addButton.className = 'd-none';
         }
  
-        currencyFormat(rate){
-            const input = parseInt(rate);
-    
-            this.rateInput = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD'
-
-            }).format(input);
-        }
-
         createItem(){
 
             if(!this.loadIInput.value || !this.originInput){
@@ -92,9 +82,7 @@ class App {
                 return;
             }
 
-            this.currencyFormat(rate.value);
-
-            const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput, this.truckNumberInput.value, this.paidUnpaidInput.value);
+            const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
 
             this.array.push(addItem);
             
@@ -219,6 +207,8 @@ class App {
             this.iCurrent = 0;
             this.readItems();
             this.boxHide.className = 'd-none';
+            this.addButton.className = 'd-show form-control w-25 main-color text-light';
+            this.viewAllButton.className = 'd-none';
 
         }
 
@@ -370,7 +360,7 @@ class App {
             this.brokerNameInput.value = '';
             this.brokerPhoneInput.value = '';
             this.extensionInput.value = '';
-            //this.rateInput.value = '';
+            this.rateInput.value = '';
             this.truckNumberInput.value = '';
             this.paidUnpaidInput.value = 'unselect';
             this.puInput.focus()
