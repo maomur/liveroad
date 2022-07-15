@@ -16,8 +16,14 @@ class App {
     viewAllButton = document.querySelector('#viewAllButton');
 
     //Inputs Nuevo Elemento
-    puInput = document.querySelector('#pu');
-    delInput = document.querySelector('#del');
+    //puInput = document.querySelector('#pu');
+    puMinput = document.querySelector('#puM');
+    puDinput = document.querySelector('#puD');
+    puAinput = document.querySelector('#puA');
+    //delInput = document.querySelector('#del');
+    delMinput = document.querySelector('#delM');
+    delDinput = document.querySelector('#delD');
+    delAinput = document.querySelector('#delA');
     loadIInput = document.querySelector('#loadI');
     originInput = document.querySelector('#origin');
     destinyInput = document.querySelector('#destiny');
@@ -53,7 +59,7 @@ class App {
 
         this.addButton.addEventListener('click', ()=> this.addForm());
 
-        this.saveButton.addEventListener('click', (puInput, delInput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput) => this.createItem(puInput, delInput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput));
+        this.saveButton.addEventListener('click', (/*puInput*/puMinput, puDinput, puAinput, /*delInput*/delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput) => this.createItem(/*puInput*/puMinput, puDinput, puAinput, /*delInput*/delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput));
 
         this.viewAllButton.addEventListener('submit', ()=> this.viewAll());
 
@@ -62,6 +68,14 @@ class App {
         this.viewAllButton.addEventListener('click', ()=>this.viewAll());
 
         this.updateButton.addEventListener('click', ()=> this.updateItem());
+
+        this.brokerPhoneInput.addEventListener('keydown', ()=>{
+            this.phonenumberFormatter();
+        });
+
+        this.rateInput.addEventListener('keyup', ()=>{
+            this.currencyFormatter();
+        });
 
     }
 
@@ -82,11 +96,15 @@ class App {
                 return;
             }
 
-            const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
+            // this.currencyFormatter();
+
+            const addItem = new Items(/*this.puInput.value, this.delInput.value,*/ this.puMinput.value, this.puDinput.value, this.puAinput.value, this.delMinput.value, this.delDinput.value, this.delAinput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, /*newRate,*/ this.truckNumberInput.value, this.paidUnpaidInput.value);
 
             this.array.push(addItem);
             
             this.readItems()
+
+
             
             this.clearInputs();
 
@@ -127,7 +145,7 @@ class App {
                 
                 //Insertamos Template
                 article.innerHTML = `
-                <div class="title-items">${item.pu}</div>
+                <div class="title-items">${item.puM}-${item.puD}-${item.puA}</div>
                 <div class="title-items">${item.load}</div>
                 <div class="title-items">${item.origin}</div>
                 <div class="title-items me-auto">${item.destiny}</div>
@@ -168,6 +186,8 @@ class App {
                 //const iCurrent = e.target.parentElement.dataset.id;
                 return item.id === id})
 
+                console.log(this.newRate)
+
                 this.puInput.value = itemUpdate.pu;
                 this.delInput.value = itemUpdate.del;
                 this.loadIInput.value = itemUpdate.load;
@@ -178,7 +198,7 @@ class App {
                 this.brokerNameInput.value = itemUpdate.brokerName;
                 this.brokerPhoneInput.value = itemUpdate.brokerPhone;
                 this.extensionInput.value = itemUpdate.phoneExtension;
-                this.rateInput.value = itemUpdate.rate;
+                this.rateInput.value = 0;
                 this.truckNumberInput.value = itemUpdate.truckNumber;
                 this.paidUnpaidInput.value = itemUpdate.paid;
                 this.iCurrent = itemUpdate.id;
@@ -253,11 +273,11 @@ class App {
             <div class="d-flex flex-wrap gap-4 p-5">
                 <div class="col-3">
                     <h3 class="fs-6">PICKUP</h3>
-                    <p class = "fs-5">${item.pu}</p>
+                    <p class = "fs-5">${item.puM}-${item.puD}-${item.puA}</p>
                 </div>
                 <div class="col-3">
                     <h3 class="fs-6">DELIVERY</h3>
-                    <p class = "fs-5">${item.del}</p>
+                    <p class = "fs-5">${item.delM}-${item.delD}-${item.delA}</p>
                 </div>
                 <div class="col-3">
                     <h3 class="fs-6">LOAD</h3>
@@ -333,7 +353,53 @@ class App {
             } 
         }
 
+        phonenumberFormatter(){
+            const inputField = document.getElementById('brokerPhone');
+            const formattedInputValue = this.formatPhoneNumber(inputField.value);
+            inputField.value = formattedInputValue;
+        };
+
+
+        formatPhoneNumber(value) {
+            if (!value) return value;
+            const phoneNumber = value.replace(/[^\d]/g, '');
+            const phoneNumberLength = phoneNumber.length;
+            if (phoneNumberLength < 4) return phoneNumber;
+            if (phoneNumberLength < 7) {
+              return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+            }
+            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+              3,
+              6
+            )}-${phoneNumber.slice(6, 10)}`;
+          }
+
+
+          currencyFormatter(){
+            const rateUnconverter = this.rateInput.value;
+            const rateConvertted = rateUnconverter.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            if(rateConvertted < 3){
+                return `$${rateUnconverter}`;
+            }
+
+            if(rateUnconverter < 4){
+                return `$${rateUnconverter.slice(0,1)}, ${rateUnconverter.slice(1,4)} `
+            }
+
+            if(rateUnconverter < 5){
+                return `$${rateUnconverter.slice(0,2)}, ${rateUnconverter.slice(2,5)} `
+            }
+
+            console.log(rateConvertted);
+            this.rateInput.value = rateConvertted;
+            return rateConvertted;
+        };
+
+          
+          
         
+
         //Toasts
         alertSuccessFuncion(mensaje = 'Ha ocurrido un error', color = 'alert-success'){
             const alertS = document.createElement('div');
@@ -350,8 +416,14 @@ class App {
 
         //Limpiamos Inputs y Focalizamos en el campo inicial
         clearInputs(){
-            this.puInput.value = '';
-            this.delInput.value = '';
+            this.puMinput.value = '';
+            this.puDinput.value = '';
+            this.puAinput.value = '';
+            this.delMinput.value = '';
+            this.delDinput.value = '';
+            this.delAinput.value = '';
+            //this.puInput.value = '';
+            //this.delInput.value = '';
             this.loadIInput.value = '';
             this.originInput.value = '';
             this.destinyInput.value = '';
@@ -363,7 +435,7 @@ class App {
             this.rateInput.value = '';
             this.truckNumberInput.value = '';
             this.paidUnpaidInput.value = 'unselect';
-            this.puInput.focus()
+            this.puMinput.focus()
         }
 }
 
