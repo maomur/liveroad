@@ -16,11 +16,9 @@ class App {
     viewAllButton = document.querySelector('#viewAllButton');
 
     //Inputs Nuevo Elemento
-    //puInput = document.querySelector('#pu');
     puMinput = document.querySelector('#puM');
     puDinput = document.querySelector('#puD');
     puAinput = document.querySelector('#puA');
-    //delInput = document.querySelector('#del');
     delMinput = document.querySelector('#delM');
     delDinput = document.querySelector('#delD');
     delAinput = document.querySelector('#delA');
@@ -59,7 +57,7 @@ class App {
 
         this.addButton.addEventListener('click', ()=> this.addForm());
 
-        this.saveButton.addEventListener('click', (/*puInput*/puMinput, puDinput, puAinput, /*delInput*/delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput) => this.createItem(/*puInput*/puMinput, puDinput, puAinput, /*delInput*/delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput));
+        this.saveButton.addEventListener('click', (puMinput, puDinput, puAinput, delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput) => this.createItem(puMinput, puDinput, puAinput, delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput));
 
         this.viewAllButton.addEventListener('submit', ()=> this.viewAll());
 
@@ -96,15 +94,11 @@ class App {
                 return;
             }
 
-            // this.currencyFormatter();
-
-            const addItem = new Items(/*this.puInput.value, this.delInput.value,*/ this.puMinput.value, this.puDinput.value, this.puAinput.value, this.delMinput.value, this.delDinput.value, this.delAinput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, /*newRate,*/ this.truckNumberInput.value, this.paidUnpaidInput.value);
+            const addItem = new Items(this.puMinput.value, this.puDinput.value, this.puAinput.value, this.delMinput.value, this.delDinput.value, this.delAinput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
 
             this.array.push(addItem);
             
             this.readItems()
-
-
             
             this.clearInputs();
 
@@ -183,13 +177,14 @@ class App {
             this.boxHide.className = 'd-show';
 
             const itemUpdate = this.array.find( (item)=>{
-                //const iCurrent = e.target.parentElement.dataset.id;
                 return item.id === id})
 
-                console.log(this.newRate)
-
-                this.puInput.value = itemUpdate.pu;
-                this.delInput.value = itemUpdate.del;
+                this.puMinput.value = itemUpdate.puM;
+                this.puDinput.value = itemUpdate.puD;
+                this.puAinput.value = itemUpdate.puA;
+                this.delMinput.value = itemUpdate.delM;
+                this.delDinput.value = itemUpdate.delD;
+                this.delAinput.value = itemUpdate.delA;
                 this.loadIInput.value = itemUpdate.load;
                 this.originInput.value = itemUpdate.origin;
                 this.destinyInput.value = itemUpdate.destiny;
@@ -212,7 +207,7 @@ class App {
 
             this.array = this.array.map( (item)=>{
                 if(item.id === this.iCurrent){
-                    return {...item, pu: this.puInput.value, del: this.delInput.value, load: this.loadIInput.value, origin: this.originInput.value, destiny: this.destinyInput.value, commodity: this.commodityInput.value, brokerCompany: this.brokerCompanyInput.value, brokerName: this.brokerNameInput.value, brokerName: this.brokerNameInput.value, brokerPhone: this.brokerPhoneInput.value, phoneExtension: this.extensionInput.value, rate: this.rateInput.value, truckNumber: this.truckNumberInput.value, paid: this.paidUnpaidInput.value}
+                    return {...item, puM: this.puMinput.value, puD: this.puDinput.value, puA: this.puAinput.value,  delM: this.delMinput.value, delD: this.delDinput.value, delA: this.delAinput.value, load: this.loadIInput.value, origin: this.originInput.value, destiny: this.destinyInput.value, commodity: this.commodityInput.value, brokerCompany: this.brokerCompanyInput.value, brokerName: this.brokerNameInput.value, brokerName: this.brokerNameInput.value, brokerPhone: this.brokerPhoneInput.value, phoneExtension: this.extensionInput.value, rate: this.rateInput.value, truckNumber: this.truckNumberInput.value, paid: this.paidUnpaidInput.value}
                 } else{
                     return item;
                 }
@@ -422,8 +417,6 @@ class App {
             this.delMinput.value = '';
             this.delDinput.value = '';
             this.delAinput.value = '';
-            //this.puInput.value = '';
-            //this.delInput.value = '';
             this.loadIInput.value = '';
             this.originInput.value = '';
             this.destinyInput.value = '';
