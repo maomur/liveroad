@@ -11,7 +11,7 @@ class App {
     formSearch = document.querySelector('#form-search-header');
     formAdd = document.querySelector('#form-control-add');
     searchInput = document.querySelector('#searchInput');
-    searchButton = document.querySelector('#searchButton');
+    closeSearchButton = document.querySelector('#closeSearch');
     addButton = document.querySelector('#addButton');
     viewAllButton = document.querySelector('#viewAllButton');
 
@@ -61,19 +61,22 @@ class App {
 
         this.viewAllButton.addEventListener('submit', ()=> this.viewAll());
 
-        this.searchInput.addEventListener('keyup', ()=> this.filter());
+        this.searchInput.addEventListener('keypress', (e)=> {
+            if(e.keyCode === 13){
+                e.preventDefault();
+                this.filter()}
+            }
+            );
 
-        this.viewAllButton.addEventListener('click', ()=>this.viewAll());
+        this.closeSearchButton.addEventListener('click', ()=> this.resetSearch());
 
-        this.updateButton.addEventListener('click', ()=> this.updateItem());
+        this.viewAllButton.addEventListener('click', () => this.viewAll());
 
-        this.brokerPhoneInput.addEventListener('keydown', ()=>{
-            this.phonenumberFormatter();
-        });
+        this.updateButton.addEventListener('click', () => this.updateItem());
 
-        this.rateInput.addEventListener('keyup', ()=>{
-            this.currencyFormatter();
-        });
+        this.brokerPhoneInput.addEventListener('keydown', () => this.phonenumberFormatter());
+
+        this.rateInput.addEventListener('keyup', () => this.currencyFormatter());
 
     }
 
@@ -240,6 +243,7 @@ class App {
         
 
         filter(){
+            this.closeSearchButton.className = 'd-show';
             if(this.searchInput.value === ''){
                 this.readItems();
             } else{
@@ -249,10 +253,15 @@ class App {
                     const loadLower = item.load.toLowerCase();
                     return searchLower == loadLower;
                 })
+                this.searchInput.value = '';
                 this.readItems(this.newFilteredArray);
             }         
         }
-
+        
+        resetSearch(){
+            this.closeSearchButton.className = 'd-none';
+            this.readItems();
+        }
 
         showItem(e){
             this.modalBody.innerHTML = '';
