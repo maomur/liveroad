@@ -17,6 +17,11 @@ body{
     min-width: 100;
 }
 
+.miniIcon{
+    background-color: black;
+    color: white;
+}
+
 .alert-style{
     position: absolute;
     top: 18%;

@@ -12,6 +12,7 @@ class App {
     formAdd = document.querySelector('#form-control-add');
     searchInput = document.querySelector('#searchInput');
     closeSearchButton = document.querySelector('#closeSearch');
+    goIconSearch = document.querySelector('#goIcon');
     addButton = document.querySelector('#addButton');
     viewAllButton = document.querySelector('#viewAllButton');
 
@@ -68,7 +69,9 @@ class App {
             }
             );
 
-        this.closeSearchButton.addEventListener('click', ()=> this.resetSearch());
+        this.closeSearchButton.addEventListener('click', () => this.resetSearch());
+
+        this.goIconSearch.addEventListener('click', () => this.filter());
 
         this.viewAllButton.addEventListener('click', () => this.viewAll());
 
