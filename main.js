@@ -383,25 +383,32 @@ class App {
 
 
           currencyFormatter(){
-            const rateUnconverter = this.rateInput.value;
-            const rateConvertted = rateUnconverter.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-            if(rateConvertted < 3){
-                return `$${rateUnconverter}`;
-            }
-
-            if(rateUnconverter < 4){
-                return `$${rateUnconverter.slice(0,1)}, ${rateUnconverter.slice(1,4)} `
-            }
-
-            if(rateUnconverter < 5){
-                return `$${rateUnconverter.slice(0,2)}, ${rateUnconverter.slice(2,5)} `
-            }
-
-            console.log(rateConvertted);
-            this.rateInput.value = rateConvertted;
-            return rateConvertted;
+            const inputFieldRate = document.querySelector('#rate');
+            const formattedInputValueRate = this.formatCurrency(inputFieldRate.value);
+            inputFieldRate.value = formattedInputValueRate;
         };
+
+
+        formatCurrency(value) {
+            if (!value) return value;
+            const rateValue = value.replace(/[^\d]/g, '');
+            const rateLength = rateValue.length;
+            if (rateLength < 4) return `$${rateValue}`;
+            
+            if (rateLength < 5) {
+              return `$${rateValue.slice(0, 1)},${rateValue.slice(1,5)}`;
+            }
+
+            if(rateLength < 6){
+                return `$${rateValue.slice(0,2)},${rateValue.slice(2,6)}`
+            }
+
+            if(rateLength < 7){
+                return `$${rateValue.slice(0,3)},${rateValue.slice(3,7)}`
+            }
+
+      
+          }
 
           
           
