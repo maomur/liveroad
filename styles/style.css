@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(231, 231, 231);
+    background-color: rgb(24, 24, 24);
 }
 
 .logo{
@@ -10,6 +10,7 @@ body{
 .main-color{
     background-color: #971f1f;
 }
+
 
 .img{
     padding: 1rem;
@@ -69,6 +70,10 @@ body{
 
 .button{
     width: 100%;
+}
+
+.pointer{
+    cursor: pointer;
 }
 
 .none{

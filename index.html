@@ -20,7 +20,7 @@
     <meta>
 </head>
 <body>
-    <div class="container p-1 bg-light shadow ">
+    <div class="container p-1 bg-light shadow">
         <header class="bg-dark">
             <a href="./"><img class="logo" src="./assets/img/liveroad-logo.png" alt="logo Liveroad"></a>
         </header>
@@ -45,20 +45,12 @@
 
         <div>
             <smal>PICKUP</smal>
-            <div class="d-flex">
-                <input id="puM" class="form-control" type="text" placeholder="MM" maxlength="2">
-                <input id="puD" class="form-control" type="text" placeholder="DD" maxlength="2">
-                <input id="puA" class="form-control" type="text" placeholder="AAAA" maxlength="4">
-            </div>
+            <input id="puInput" type="date" class="form-control">
         </div>
 
         <div>
             <smal>DELIVERY</smal>
-            <div class="d-flex">
-                <input id="delM" class="form-control" type="text" placeholder="MM" maxlength="2">
-                <input id="delD" class="form-control" type="text" placeholder="DD" maxlength="2">
-                <input id="delA" class="form-control" type="text" placeholder="AAAA" maxlength="4">
-            </div>
+            <input id="delInput" type="date" class="form-control">
         </div>
 
         <div><input id="loadI" class="form-control" type="text" placeholder="Load Number" required></div>
@@ -69,7 +61,7 @@
         <div><input id="brokerName" class="form-control" type="text" placeholder="Broker Name"></div>
         <div><input id="brokerPhone" class="form-control" type="text" placeholder="Broker Phone"></div>
         <div><input id="extension" class="form-control" type="text" placeholder="Phone Extension"></div>
-        <div><input id="rate" class="form-control" type="text" placeholder="Rate"></div>
+        <div><input id="rate" class="form-control" type="text" placeholder="$ Rate"></div>
         <div><input id="truckNumber" class="form-control" type="text" placeholder="Truck No."></div>
         <div>
             <select class="form-select" name="paidUnpaid" id="paidUnpaid">
@@ -78,6 +70,37 @@
                 <option value="unpaid">Unpaid</option>
             </select>
         </div>
+
+        <select class="form-select" name="paidUnpaid" id="paidUnpaid">
+            <option value="unselect">--- Paid/Unpaid ---</option>
+            <option value="paid">Paid</option>
+            <option value="unpaid">Mauricio</option>
+            <option value="unpaid">Juan Carlos</option>
+            <option value="unpaid">Maribel</option>
+            <option value="unpaid">Andrea</option>
+            <option value="unpaid">Laia</option>
+            <option value="unpaid">Viviana</option>
+            <option value="unpaid">Ornella</option>
+            <option value="unpaid">Alejandro</option>
+            <option value="unpaid">Lautaro</option>
+            <option value="unpaid">Alejandra</option>
+            <option value="unpaid">Francisco</option>
+            <option value="unpaid">Felipe</option>
+            <option value="unpaid">Leti</option>
+            <option value="unpaid">Sara</option>
+            <option value="unpaid">Patricia</option>
+            <option value="unpaid">Lorena</option>
+            <option value="unpaid">Anna</option>
+
+            <option value="unpaid">Unpaid</option>
+
+        </select>
+
+
+
+
+
+
         <div>
             <div class="d-block">
                 <div id="saveDiv" class="col-4 button"><button id="saveItem" class="form-control bg-dark text-light">Save</button></div>

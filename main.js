@@ -17,12 +17,8 @@ class App {
     viewAllButton = document.querySelector('#viewAllButton');
 
     //Inputs Nuevo Elemento
-    puMinput = document.querySelector('#puM');
-    puDinput = document.querySelector('#puD');
-    puAinput = document.querySelector('#puA');
-    delMinput = document.querySelector('#delM');
-    delDinput = document.querySelector('#delD');
-    delAinput = document.querySelector('#delA');
+    puInput = document.querySelector('#puInput');
+    delInput = document.querySelector('#delInput');
     loadIInput = document.querySelector('#loadI');
     originInput = document.querySelector('#origin');
     destinyInput = document.querySelector('#destiny');
@@ -58,7 +54,7 @@ class App {
 
         this.addButton.addEventListener('click', ()=> this.addForm());
 
-        this.saveButton.addEventListener('click', (puMinput, puDinput, puAinput, delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput) => this.createItem(puMinput, puDinput, puAinput, delMinput, delDinput, delAinput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput));
+        this.saveButton.addEventListener('click', (puInput, delInput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput) => this.createItem(puInput, delInput, loadIInput, originInput, destinyInput, commodityInput, brokerCompanyInput, brokerNameInput, brokerPhoneInput, extensionInput, rateInput, truckNumberInput, paidUnpaidInput));
 
         this.viewAllButton.addEventListener('submit', ()=> this.viewAll());
 
@@ -79,8 +75,6 @@ class App {
 
         this.brokerPhoneInput.addEventListener('keydown', () => this.phonenumberFormatter());
 
-        this.rateInput.addEventListener('keyup', () => this.currencyFormatter());
-
     }
 
 //------------------> FUNCIONES <-------------------//
@@ -100,7 +94,7 @@ class App {
                 return;
             }
 
-            const addItem = new Items(this.puMinput.value, this.puDinput.value, this.puAinput.value, this.delMinput.value, this.delDinput.value, this.delAinput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
+            const addItem = new Items(this.puInput.value, this.delInput.value, this.loadIInput.value, this.originInput.value, this.destinyInput.value, this.commodityInput.value, this.brokerCompanyInput.value, this.brokerNameInput.value, this.brokerPhoneInput.value, this.extensionInput.value, this.rateInput.value, this.truckNumberInput.value, this.paidUnpaidInput.value);
 
             this.array.push(addItem);
             
@@ -134,19 +128,18 @@ class App {
                 iconDelet.addEventListener('click', ( e => this.deleteItem(e)));
 
                 //Asignación de Clases y Atributos            
-                iconEye.className = "bi bi-eye fs-3 p-1 text-primary";
-                iconEdit.className = "bi bi-pencil-square p-1 fs-4 text-warning";
-                iconDelet.className = "bi bi-trash3-fill p-1 fs-4 text-danger";
+                iconEdit.className = "bi bi-pencil-square p-1 fs-4 text-warning pointer";
+                iconDelet.className = "bi bi-trash3-fill p-1 fs-4 text-danger pointer";
                 iconDelet.setAttribute('data-bs-toggle', 'modal');
                 iconDelet.setAttribute('data-bs-target', '#deleteModal');
                 iconEye.setAttribute('data-bs-toggle', 'modal');
                 iconEye.setAttribute('data-bs-target', '#itemModal');
-                iconEye.className = 'bi bi-eye fs-3 p-1 text-primary';
+                iconEye.className = 'bi bi-eye fs-3 p-1 text-primary pointer';
                 
                 //Insertamos Template
                 article.innerHTML = `
-                <div class="title-items">${item.puM}-${item.puD}-${item.puA}</div>
-                <div class="title-items">${item.load}</div>
+                <div class="title-items">${item.pu}</div>
+                <div class="title-items">${item.del}</div>
                 <div class="title-items">${item.origin}</div>
                 <div class="title-items me-auto">${item.destiny}</div>
                 `   
@@ -185,12 +178,8 @@ class App {
             const itemUpdate = this.array.find( (item)=>{
                 return item.id === id})
 
-                this.puMinput.value = itemUpdate.puM;
-                this.puDinput.value = itemUpdate.puD;
-                this.puAinput.value = itemUpdate.puA;
-                this.delMinput.value = itemUpdate.delM;
-                this.delDinput.value = itemUpdate.delD;
-                this.delAinput.value = itemUpdate.delA;
+                this.puInput.value = itemUpdate.pu;
+                this.delInput.value = itemUpdate.del;
                 this.loadIInput.value = itemUpdate.load;
                 this.originInput.value = itemUpdate.origin;
                 this.destinyInput.value = itemUpdate.destiny;
@@ -199,7 +188,7 @@ class App {
                 this.brokerNameInput.value = itemUpdate.brokerName;
                 this.brokerPhoneInput.value = itemUpdate.brokerPhone;
                 this.extensionInput.value = itemUpdate.phoneExtension;
-                this.rateInput.value = 0;
+                this.rateInput.value = itemUpdate.rate;
                 this.truckNumberInput.value = itemUpdate.truckNumber;
                 this.paidUnpaidInput.value = itemUpdate.paid;
                 this.iCurrent = itemUpdate.id;
@@ -212,13 +201,14 @@ class App {
         this.saveButton.className = 'form-control bg-dark text-light';
 
             this.array = this.array.map( (item)=>{
+
                 if(item.id === this.iCurrent){
-                    return {...item, puM: this.puMinput.value, puD: this.puDinput.value, puA: this.puAinput.value,  delM: this.delMinput.value, delD: this.delDinput.value, delA: this.delAinput.value, load: this.loadIInput.value, origin: this.originInput.value, destiny: this.destinyInput.value, commodity: this.commodityInput.value, brokerCompany: this.brokerCompanyInput.value, brokerName: this.brokerNameInput.value, brokerName: this.brokerNameInput.value, brokerPhone: this.brokerPhoneInput.value, phoneExtension: this.extensionInput.value, rate: this.rateInput.value, truckNumber: this.truckNumberInput.value, paid: this.paidUnpaidInput.value}
+                    return {...item, pu: this.puInput.value, del: this.delInput.value, load: this.loadIInput.value, origin: this.originInput.value, destiny: this.destinyInput.value, commodity: this.commodityInput.value, brokerCompany: this.brokerCompanyInput.value, brokerName: this.brokerNameInput.value, brokerName: this.brokerNameInput.value, brokerPhone: this.brokerPhoneInput.value, phoneExtension: this.extensionInput.value, rate: this.rateInput.value, truckNumber: this.truckNumberInput.value, paid: this.paidUnpaidInput.value}
                 } else{
                     return item;
                 }
             })
-            
+
             this.alertSuccessFuncion('The record has been updated', 'alert-primary');
 
             this.readItems()
@@ -273,6 +263,9 @@ class App {
 
             const modalInfo = document.createElement('div');
 
+            const currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.rate);
+            
+         
             modalInfo.innerHTML = 
             `
             <h4 class="d-block px-4">Main Information</h4>
@@ -280,11 +273,11 @@ class App {
             <div class="d-flex flex-wrap gap-4 p-5">
                 <div class="col-3">
                     <h3 class="fs-6">PICKUP</h3>
-                    <p class = "fs-5">${item.puM}-${item.puD}-${item.puA}</p>
+                    <p class = "fs-5">${item.pu}</p>
                 </div>
                 <div class="col-3">
                     <h3 class="fs-6">DELIVERY</h3>
-                    <p class = "fs-5">${item.delM}-${item.delD}-${item.delA}</p>
+                    <p class = "fs-5">${item.del}</p>
                 </div>
                 <div class="col-3">
                     <h3 class="fs-6">LOAD</h3>
@@ -325,7 +318,7 @@ class App {
                 </div>
                 <div class="col-3">
                     <h3 class="fs-6">Rate</h3>
-                    <p class = "fs-5">${item.rate}</p>
+                    <p class = "fs-5">${currency}</p>
                 </div>
                 <div class="col-3">
                     <h3 class="fs-6">Truck No</h3>
@@ -378,41 +371,8 @@ class App {
             return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
               3,
               6
-            )}-${phoneNumber.slice(6, 10)}`;
-          }
-
-
-          currencyFormatter(){
-            const inputFieldRate = document.querySelector('#rate');
-            const formattedInputValueRate = this.formatCurrency(inputFieldRate.value);
-            inputFieldRate.value = formattedInputValueRate;
-        };
-
-
-        formatCurrency(value) {
-            if (!value) return value;
-            const rateValue = value.replace(/[^\d]/g, '');
-            const rateLength = rateValue.length;
-            if (rateLength < 4) return `$${rateValue}`;
-            
-            if (rateLength < 5) {
-              return `$${rateValue.slice(0, 1)},${rateValue.slice(1,5)}`;
-            }
-
-            if(rateLength < 6){
-                return `$${rateValue.slice(0,2)},${rateValue.slice(2,6)}`
-            }
-
-            if(rateLength < 7){
-                return `$${rateValue.slice(0,3)},${rateValue.slice(3,7)}`
-            }
-
-      
-          }
-
-          
-          
-        
+            )}-${phoneNumber.slice(6, 9)}`;
+          }           
 
         //Toasts
         alertSuccessFuncion(mensaje = 'Ha ocurrido un error', color = 'alert-success'){
@@ -430,12 +390,8 @@ class App {
 
         //Limpiamos Inputs y Focalizamos en el campo inicial
         clearInputs(){
-            this.puMinput.value = '';
-            this.puDinput.value = '';
-            this.puAinput.value = '';
-            this.delMinput.value = '';
-            this.delDinput.value = '';
-            this.delAinput.value = '';
+            this.puInput.value = '';
+            this.delInput.value = '';
             this.loadIInput.value = '';
             this.originInput.value = '';
             this.destinyInput.value = '';
@@ -447,7 +403,7 @@ class App {
             this.rateInput.value = '';
             this.truckNumberInput.value = '';
             this.paidUnpaidInput.value = 'unselect';
-            this.puMinput.focus()
+            this.puInput.focus()
         }
 }
 
